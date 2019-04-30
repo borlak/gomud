@@ -3,13 +3,16 @@ package main
 import (
 	"fmt"
 	"net"
+	"runtime"
 )
 
+// Client are individual conneted players
 type Client struct {
 	socket net.Conn
 	data   chan []byte
 }
 
+// ClientManager managers the conneted clients
 type ClientManager struct {
 	clients    map[*Client]bool
 	broadcast  chan []byte
@@ -71,6 +74,7 @@ func (manager *ClientManager) send(client *Client) {
 	}
 }
 
+// StartServer starts the server that accepts connections
 func StartServer() {
 	fmt.Println("Starting server...")
 	listener, error := net.Listen("tcp", ":12345")
@@ -93,5 +97,7 @@ func StartServer() {
 		manager.register <- client
 		go manager.receive(client)
 		go manager.send(client)
+
+		runtime.Gosched()
 	}
 }

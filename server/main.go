@@ -27,5 +27,8 @@ func main() {
 
 	area.DrawAsciiMap(mapRooms)
 
+	database := new(Database)
+	database.connect()
+
 	StartServer()
 }
