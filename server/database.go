@@ -8,18 +8,18 @@ import (
 
 // Database connects to a MySQL database
 type Database struct {
-	connection *sql.DB
+	db *sql.DB
 }
 
 func (database *Database) connect() {
 	var err error
-	database.connection, err = sql.Open("mysql", "root:password@tcp(127.0.0.1)/gomud")
+	database.db, err = sql.Open("mysql", "root:password@tcp(127.0.0.1)/gomud")
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// Open() doesn't open a connection. validate connection
-	err = database.connection.Ping()
+	// Open() doesn't actually open a connection. so we need to validate connection
+	err = database.db.Ping()
 	if err != nil {
 		panic(err.Error())
 	}

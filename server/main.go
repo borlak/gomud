@@ -14,21 +14,22 @@ func main() {
 	area := NewArea(5, 5)
 	fmt.Println("Area", area)
 
-	/*
-		room, err := area.GetBlock(25, 25)
-
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println("Checking for room 25,25", room)
-	*/
-
 	mapRooms := area.GetMap(15, 15, 5, 5)
 
 	area.DrawAsciiMap(mapRooms)
 
 	database := new(Database)
 	database.connect()
+	rows, err := database.db.Query("select id from test_table")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var id int64
+		rows.Scan(&id)
+		fmt.Println("Id is", id)
+	}
 
 	StartServer()
 }
