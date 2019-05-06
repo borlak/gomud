@@ -1,4 +1,4 @@
-package main
+package areas
 
 import (
 	"errors"
@@ -55,20 +55,20 @@ func (area Area) GetRoom(roomX, roomY int) (*Room, error) {
 		panic(err)
 	}
 
-	room := block.GetRoom(roomX-(BlockSize*blockX), roomY-(BlockSize*blockY))
+	room := block.GetRoom(uint16(roomX-(BlockSize*blockX)), uint16(roomY-(BlockSize*blockY)))
 	return room, nil
 }
 
 // GetMap returns a 2d slice of rooms with their types
-func (area Area) GetMap(centerX, centerY, radiusX, radiusY int) [][]int {
-	mapRooms := make([][]int, radiusX*2+1)
+func (area Area) GetMap(centerX, centerY, radiusX, radiusY int) [][]uint8 {
+	mapRooms := make([][]uint8, radiusX*2+1)
 	for i := range mapRooms {
-		mapRooms[i] = make([]int, radiusY*2+1)
+		mapRooms[i] = make([]uint8, radiusY*2+1)
 	}
 
 	startX := centerX - radiusX
 	startY := centerY - radiusY
-	var roomKind int
+	var roomKind uint8
 
 	for x := 0; x < radiusX*2+1; x++ {
 		for y := 0; y < radiusY*2+1; y++ {
@@ -91,7 +91,7 @@ func (area Area) GetMap(centerX, centerY, radiusX, radiusY int) [][]int {
 	return mapRooms
 }
 
-func (area Area) DrawAsciiMap(mapRooms [][]int) {
+func (area Area) DrawAsciiMap(mapRooms [][]uint8) {
 	for y := range mapRooms {
 		for x := range mapRooms[y] {
 			fmt.Printf("[%2d]", mapRooms[x][y])

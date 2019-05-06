@@ -3,6 +3,8 @@ package main
 
 import (
 	"fmt"
+	"mud/areas"
+	"mud/server"
 )
 
 // Start the server.
@@ -11,7 +13,7 @@ func main() {
 	// Seed the RNG
 	//	rand.Seed(time.Now().UnixNano())
 
-	area := NewArea(5, 5)
+	area := areas.NewArea(5, 5)
 	fmt.Println("Area", area)
 
 	mapRooms := area.GetMap(15, 15, 5, 5)
@@ -31,5 +33,5 @@ func main() {
 		fmt.Println("Id is", id)
 	}
 
-	StartServer()
+	server.StartServer()
 }

@@ -1,4 +1,4 @@
-package main
+package areas
 
 // RoomBlock are blocks of rooms
 type RoomBlock struct {
@@ -13,7 +13,7 @@ func NewRoomBlock(area *Area) *RoomBlock {
 
 	for x := range block.rooms {
 		for y := range block.rooms[x] {
-			block.rooms[x][y] = NewRoom()
+			block.rooms[x][y] = NewRoom(uint16(x), uint16(y))
 		}
 	}
 
@@ -21,6 +21,6 @@ func NewRoomBlock(area *Area) *RoomBlock {
 }
 
 // GetRoom get a specific room in the block
-func (rb RoomBlock) GetRoom(x, y int) *Room {
+func (rb RoomBlock) GetRoom(x, y uint16) *Room {
 	return rb.rooms[x][y]
 }
